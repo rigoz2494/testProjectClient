@@ -1,34 +1,50 @@
 <template>
   <div id="app">
-    <div v-if="isAuth">LOGGED</div>
-    <div v-else>NOT LOGGED</div>
+    <v-app>
+      <main-header></main-header>
 
-    <router-view :key="routerKey"/>
+      <v-container fluid>
+        <router-view :key="routerKey"/>
+      </v-container>
+    </v-app>
+
+    <notifications group="notify"/>
   </div>
+
 </template>
 
 <script>
-  import Vue from 'vue'
+import {mapGetters} from 'vuex'
+import axios from "axios";
 
-  import { mapGetters } from 'vuex'
+const MainHeader = () => import('./components/MainHeader')
 
-  export default {
-    data() {
-      return {
+export default {
+  components: {
+    MainHeader
+  },
+  data() {
+    return {}
+  },
 
-      }
-    },
+  computed: {
+    ...mapGetters([
+      'isAuth'
+    ]),
 
-    computed: {
-      ...mapGetters([
-        'isAuth'
-      ]),
+    routerKey() {
+      return this.$router.path
+    }
+  },
 
-      routerKey() {
-        return this.$router.path
-      }
+  beforeMount() {
+    const token = window.localStorage.getItem('token')
+
+    if (token) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
     }
   }
+}
 
 </script>
 

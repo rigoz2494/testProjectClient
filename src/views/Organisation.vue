@@ -1,12 +1,17 @@
 <template>
-  <div>
-    log pagr
-  </div>
+    <div>
+
+    </div>
 </template>
 
 <script>
+
+
 export default {
-  name: 'Login'
+  name: 'Organisation',
+  components: {
+
+  }
 }
 </script>
 

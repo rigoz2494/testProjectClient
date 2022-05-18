@@ -1,27 +1,38 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import authMiddleware from './middleware/auth'
+import store from '../store'
+
+import AUTH_ROUTES from "@/router/auth-routes";
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/login',
-    name: 'Login',
-    component: () => import('../views/Login'),
+    name: 'login',
+    component: () => import('../views/auth/Login'),
     meta: {
-      title: 'Акторизация'
+      title: 'Акторизация',
     }
   },
   {
+    path: '/register',
+    name: 'register',
+    meta: {
+      title: 'Регистрация',
+      requiredAuth: true
+    },
+    component: () => import('../views/auth/Register')
+  },
+  {
     path: '/',
-    name: 'Home',
+    name: 'home',
     component: () => import('../views/Home'),
     meta: {
       title: 'Организация',
-      middleware: [authMiddleware]
     }
-  }
+  },
+  ...AUTH_ROUTES
 ]
 
 const router = new VueRouter({
